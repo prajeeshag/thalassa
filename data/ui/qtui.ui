@@ -1,0 +1,664 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QtMplWindow</class>
+ <widget class="QMainWindow" name="QtMplWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>719</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Thalassa</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
+      </property>
+      <item>
+       <widget class="QWidget" name="navigatorwidget" native="true">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>92</width>
+          <height>229</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <layout class="QGridLayout" name="_2">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item row="5" column="1">
+            <widget class="QToolButton" name="zoomOutButton">
+             <property name="toolTip">
+              <string>Zoom Out</string>
+             </property>
+             <property name="whatsThis">
+              <string>Zoom out by pressing this button to see less detail.</string>
+             </property>
+             <property name="text">
+              <string>...</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../thalassa.qrc">
+               <normaloff>:/icons/zoom-out.png</normaloff>:/icons/zoom-out.png</iconset>
+             </property>
+             <property name="shortcut">
+              <string>-</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QToolButton" name="moveRightButton">
+             <property name="toolTip">
+              <string>Right</string>
+             </property>
+             <property name="whatsThis">
+              <string>Rotates the earth clockwise around its axis.</string>
+             </property>
+             <property name="text">
+              <string>...</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../thalassa.qrc">
+               <normaloff>:/icons/arrow-right.png</normaloff>:/icons/arrow-right.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QToolButton" name="moveUpButton">
+             <property name="toolTip">
+              <string>Up</string>
+             </property>
+             <property name="whatsThis">
+              <string>Tilts the earth's axis towards the user.</string>
+             </property>
+             <property name="text">
+              <string>...</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../thalassa.qrc">
+               <normaloff>:/icons/arrow-up.png</normaloff>:/icons/arrow-up.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QSlider" name="zoomSlider">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>150</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>Zoom Slider</string>
+             </property>
+             <property name="whatsThis">
+              <string>Use this slider to adjust the zoom level of the map.</string>
+             </property>
+             <property name="minimum">
+              <number>0</number>
+             </property>
+             <property name="maximum">
+              <number>15</number>
+             </property>
+             <property name="pageStep">
+              <number>0</number>
+             </property>
+             <property name="value">
+              <number>0</number>
+             </property>
+             <property name="sliderPosition">
+              <number>0</number>
+             </property>
+             <property name="tracking">
+              <bool>true</bool>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="invertedAppearance">
+              <bool>false</bool>
+             </property>
+             <property name="tickPosition">
+              <enum>QSlider::TicksAbove</enum>
+             </property>
+             <property name="tickInterval">
+              <number>1</number>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QToolButton" name="zoomInButton">
+             <property name="toolTip">
+              <string>Zoom In</string>
+             </property>
+             <property name="whatsThis">
+              <string>Zoom in by pressing this button to see more detail.</string>
+             </property>
+             <property name="text">
+              <string>...</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../thalassa.qrc">
+               <normaloff>:/icons/zoom-in.png</normaloff>:/icons/zoom-in.png</iconset>
+             </property>
+             <property name="shortcut">
+              <string>+</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QToolButton" name="moveDownButton">
+             <property name="toolTip">
+              <string>Down</string>
+             </property>
+             <property name="whatsThis">
+              <string>Tilts the earth's axis away from the user.</string>
+             </property>
+             <property name="text">
+              <string>...</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../thalassa.qrc">
+               <normaloff>:/icons/arrow-down.png</normaloff>:/icons/arrow-down.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QToolButton" name="moveLeftButton">
+             <property name="toolTip">
+              <string>Left</string>
+             </property>
+             <property name="whatsThis">
+              <string>Rotates the earth counterclockwise around its axis.</string>
+             </property>
+             <property name="text">
+              <string>...</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../thalassa.qrc">
+               <normaloff>:/icons/arrow-left.png</normaloff>:/icons/arrow-left.png</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QFrame" name="frame">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>300</height>
+            </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <widget class="QLineEdit" name="lonEdit">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>80</y>
+              <width>51</width>
+              <height>21</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="latEdit">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>30</y>
+              <width>51</width>
+              <height>21</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QLabel" name="latLabel">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>10</y>
+              <width>57</width>
+              <height>15</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Lat</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="lonLabel">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>60</y>
+              <width>57</width>
+              <height>15</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Lon</string>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="goLatLonButton">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>110</y>
+              <width>51</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Go!</string>
+            </property>
+           </widget>
+           <widget class="Line" name="line">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>140</y>
+              <width>91</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+           <widget class="QLabel" name="lonLabel_2">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>210</y>
+              <width>57</width>
+              <height>15</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>j</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="latLabel_2">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>160</y>
+              <width>57</width>
+              <height>15</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>i</string>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="xPosEdit">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>180</y>
+              <width>51</width>
+              <height>21</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="yPosEdit">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>230</y>
+              <width>51</width>
+              <height>21</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="goMatXYButton">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>260</y>
+              <width>51</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Go!</string>
+            </property>
+           </widget>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QtMplWidget" name="mapwidget" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="frame_2">
+        <property name="minimumSize">
+         <size>
+          <width>130</width>
+          <height>650</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>130</width>
+          <height>650</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QPushButton" name="openGridButton">
+           <property name="text">
+            <string>Open grid</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="loadChangesButton">
+           <property name="text">
+            <string>Load changes</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="saveChangesButton">
+           <property name="text">
+            <string>Save changes</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="Line" name="line_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="cellEditionLabel">
+           <property name="text">
+            <string>Cell edition</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="cellDepth_TLabel">
+           <property name="text">
+            <string>depth_t</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="cellDepth_TEdit"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="cellNum_LevelsLabel">
+           <property name="text">
+            <string>num_levels</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="cellNum_LevelsEdit"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="cellChangeValueButton">
+           <property name="text">
+            <string>Change</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="fixedCheckBox">
+           <property name="text">
+            <string>Fixed Value</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="Line" name="line_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="visualizationLabel">
+           <property name="text">
+            <string>Visualization</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="depthRadioButton">
+           <property name="text">
+            <string>depth_t</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="levelsRadioButton">
+           <property name="text">
+            <string>num_levels</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="colorbarRangeLabel">
+           <property name="text">
+            <string>Colorbar range</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="minLabel">
+           <property name="text">
+            <string>Minimum</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="minEdit"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="maxLabel">
+           <property name="text">
+            <string>Maximum</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="maxEdit"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="valueRangeButton">
+           <property name="text">
+            <string>Go!</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="Line" name="line_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="maxLabel_2">
+           <property name="text">
+            <string>Coastine Details</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="resolutionComboBox">
+           <item>
+            <property name="text">
+             <string>Crude</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Low</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Intermediate</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>High</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Full</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="reportwidget" native="true">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionOpenGrid"/>
+    <addaction name="actionLoadGridChanges"/>
+    <addaction name="actionSaveGridChanges"/>
+    <addaction name="actionQuit"/>
+   </widget>
+   <addaction name="menuFile"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionOpenGrid">
+   <property name="text">
+    <string>Open grid</string>
+   </property>
+  </action>
+  <action name="actionSaveGridChanges">
+   <property name="text">
+    <string>Save grid changes</string>
+   </property>
+  </action>
+  <action name="actionLoadGridChanges">
+   <property name="text">
+    <string>Load grid changes</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QtMplWidget</class>
+   <extends>QWidget</extends>
+   <header>thalassa.ui.qtmplui</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../thalassa.qrc"/>
+ </resources>
+ <connections/>
+</ui>
