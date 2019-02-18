@@ -40,8 +40,8 @@ class MplFigure(Figure):
             'lat_ts': None,
             'lat_1': None,
             'lat_2': None,
-            'lat_0': 30,
-            'lon_0': -70,
+            'lat_0': 20.,
+            'lon_0': 85.,
             'lon_1': None,
             'lon_2': None,
             'no_rot': False,
@@ -129,7 +129,8 @@ class MplFigure(Figure):
         self._calc_zoom_level()
         self._bmap = basemap.Basemap(**self.options)
         self._bmap.ax = self.add_axes((0.05, 0.10, 0.9, 0.9))
-        self._bmap.ax.set_axis_bgcolor('black')
+        #self._bmap.ax.set_axis_bgcolor('black')
+        self._bmap.ax.set_facecolor('black')
 
         self._parse_pcolor_args(kwargs)
         zs = self._calc_step()
@@ -178,6 +179,7 @@ class MplFigure(Figure):
                 self.grid.x_vert_T,
                 self.grid.y_vert_T,
                 x, y)
+            print(x,y,posx,posy)
             self.selected_cells = (posx, posy)
             self.selected_cell = (posx[0], posy[0])
             self.selected_cell_changed()
@@ -227,6 +229,7 @@ class MplFigure(Figure):
 
     def _calc_pos(self, xarray, yarray, x, y):
         posx, posy = self.grid.calc_pos(xarray, yarray, x, y)
+        print(x,y,posx,posy)
         zs = self._calc_step()
         xstart = posx - zs / 2
         xend = posx + zs / 2

@@ -26,18 +26,24 @@ class MOM4Grid(Grid):
 
     def preprocessing(self):
         super(MOM4Grid, self).preprocessing()
-        #self.x_vert_T = self.data.variables['x_vert_T']
         self.X = self.data.variables['geolon_vert_t'][:]
-        #self.y_vert_T = self.data.variables['y_vert_T']
+        self.X[np.where(self.X<0.)] = self.X[np.where(self.X<0.)] + 360.
+        print(self.X.shape)
+        print(self.X[100,:])
+        print(np.any(np.where(self.X<0.)))
         self.Y = self.data.variables['geolat_vert_t'][:]
+        self.depth_t = self.data.variables['ht'][:]
+        self.num_levels = self.data.variables['kmt'][:]
+        self.zb = self.data.variables['zt'][:]
+        self.x_vert_T = self._vert_T(self.X)
+        self.y_vert_T = self._vert_T(self.Y)
+        #self.y_vert_T = self.data.variables['y_vert_T']
+        #self.x_vert_T = self.data.variables['x_vert_T']
         #self.X = self._close_north_pole(self.x_vert_T)
         #self.Y = self._close_north_pole(self.y_vert_T)
         #self.depth_t = self.data.variables['depth_t'][:]
-        self.depth_t = self.data.variables['ht'][:]
         #self.num_levels = self.data.variables['num_levels'][:]
-        self.num_levels = self.data.variables['kmt'][:]
         #self.zb = self.data.variables['zb'][:]
-        self.zb = self.data.variables['zt'][:]
         self.join_lat = self.data.join_lat
 
     def compare_differences(self, variable, cmpe):
@@ -63,6 +69,7 @@ class MOM4Grid(Grid):
 
     def calc_pos(self, xarray, yarray, x, y):
         posx = posy = 0
+        print(x,y)
         if y <= self.join_lat:
             # Still using this method because it's much quicker
             px = (((xarray[2] > x) | (xarray[3] > x)) &
@@ -76,7 +83,9 @@ class MOM4Grid(Grid):
                 self.y_vert_T,
                 (x, y))
         p = np.where(cond)
+        print(p)
         posx, posy = int(p[0][0]), int(p[1][0])
+        #posx, posy = int(p[1][0]), int(p[0][0])
         return posx, posy
 
     def change_value(self, px, py, depth_t, num_levels):
@@ -122,14 +131,22 @@ class MOM4Grid(Grid):
         return sx, sy
 
     def _close_north_pole(self, array):
-        print(array.shape)
-        #_, y, x = array.shape
-        y, x = array.shape
+        _, y, x = array.shape
         R = np.zeros((y + 1, x + 1))
         R[:y, :x] = array[0, :]
         R[y, :x] = array[2, -1, :]
         R[:y, x] = array[3, :, -1]
         R[y, x] = array[1, -1, -1]
+        return R
+
+    def _vert_T(self, array):
+        y, x = array.shape
+        print([y,x])
+        R = np.zeros((4, y - 1, x - 1))
+        R[0,:,:] = array[:y-1,:x-1]
+        R[1,:,:] = array[:y-1,1:x]
+        R[2,:,:] = array[1:y,:x-1]
+        R[3,:,:] = array[1:y,1:x]
         return R
 
     def _inside_poly(self, poly_x, poly_y, p):
