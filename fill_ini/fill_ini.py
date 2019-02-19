@@ -4,13 +4,23 @@ import numpy as np
 from netCDF4 import Dataset
 from shutil import copy2, move
 
-def fill_values(to,frm,var):
+def fill_values4d(to,frm,var):
     i = -1
     var1 = var
     for z, y, x in to:
         i = i + 1
         (z1, y1, x1) = frm[i]
         var1[:,z,y,x] = var[:,z1,y1,x1]
+    return var1
+
+def fill_values3d(to,frm,var):
+    i = -1
+    var1 = var
+    for z, y, x in to:
+        i = i + 1
+        (z1, y1, x1) = frm[i]
+        if (z!=0): continue
+        var1[:,y,x] = var[:,y1,x1]
     return var1
 
 oldgrdfile=sys.argv[1]
@@ -89,18 +99,25 @@ except OSError:
 for fil in inifiles:
     basenm=os.path.basename(fil)
     ofile = "outfiles/"+basenm
-    copy2(fil,ofile)
-    f = Dataset(ofile,'r+',format="NETCDF4")
+    tmpfile = "._fill_ini_tmp.nc"
+    copy2(fil,tmpfile)
+    f = Dataset(tmpfile,'r+',format="NETCDF4")
+    print(basenm)
     for var in f.variables:
         if len(f.variables[var].shape)==4:
-            print(f.variables[var].shape)
             dat = f.variables[var][:]
-            dat = fill_values(to,frm,dat)
+            dat = fill_values4d(to,frm,dat)
+            f.variables[var][:]=dat
+        elif len(f.variables[var].shape)==3:
+            dat = f.variables[var][:]
+            dat = fill_values3d(to,frm,dat)
             f.variables[var][:]=dat
         elif len(f.variables[var].shape)!=1:
+            print(var,fil)
             print("Dimension Error")
             exit()
     f.close()
+    move(tmpfile,ofile)
 
 
 
