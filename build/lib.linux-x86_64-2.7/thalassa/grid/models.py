@@ -27,10 +27,11 @@ class MOM4Grid(Grid):
     def preprocessing(self):
         super(MOM4Grid, self).preprocessing()
         self.X = self.data.variables['geolon_vert_t'][:]
-        self.X[np.where(self.X<0.)] = self.X[np.where(self.X<0.)] + 360.
-        print(self.X.shape)
-        print(self.X[100,:])
-        print(np.any(np.where(self.X<0.)))
+        indx=np.where(self.X > 180.)
+        self.X[indx] = -(360. % self.X[indx])
+        indx=np.where(self.X < -180.)
+        self.X[indx] = self.X[indx] % 360.
+        #self.X[np.where(self.X<0.)] = self.X[np.where(self.X<0.)] + 360.
         self.Y = self.data.variables['geolat_vert_t'][:]
         self.depth_t = self.data.variables['ht'][:]
         self.num_levels = self.data.variables['kmt'][:]
@@ -69,8 +70,8 @@ class MOM4Grid(Grid):
 
     def calc_pos(self, xarray, yarray, x, y):
         posx = posy = 0
-        print(x,y)
         if y <= self.join_lat:
+        #if False:
             # Still using this method because it's much quicker
             px = (((xarray[2] > x) | (xarray[3] > x)) &
                   ((xarray[1] < x) | (xarray[0] < x)))
@@ -83,7 +84,6 @@ class MOM4Grid(Grid):
                 self.y_vert_T,
                 (x, y))
         p = np.where(cond)
-        print(p)
         posx, posy = int(p[0][0]), int(p[1][0])
         #posx, posy = int(p[1][0]), int(p[0][0])
         return posx, posy
@@ -140,13 +140,14 @@ class MOM4Grid(Grid):
         return R
 
     def _vert_T(self, array):
+        # 1 2
+        # 0 3
         y, x = array.shape
-        print([y,x])
         R = np.zeros((4, y - 1, x - 1))
         R[0,:,:] = array[:y-1,:x-1]
-        R[1,:,:] = array[:y-1,1:x]
-        R[2,:,:] = array[1:y,:x-1]
-        R[3,:,:] = array[1:y,1:x]
+        R[1,:,:] = array[1:y,:x-1]
+        R[2,:,:] = array[1:y,1:x]
+        R[3,:,:] = array[:y-1,1:x]
         return R
 
     def _inside_poly(self, poly_x, poly_y, p):

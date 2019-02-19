@@ -50,12 +50,12 @@ class QtMplUI(QtGui.QMainWindow, Ui_QtMplWindow, UI):
         text_items = []
         if self._figure.pointed_cell:
             text_items.append(("Lat: %.2f | Lon: %.2f | i: %d | j: %d" % (
-                lat, lon, self._figure.pointed_cell[0],
-                self._figure.pointed_cell[1])))
+                lon, lat, self._figure.pointed_cell[1],
+                self._figure.pointed_cell[0])))
         if self._figure.selected_cell:
             text_items.append(("selected -> i: %d | j: %d" % (
-                self._figure.selected_cell[0],
-                self._figure.selected_cell[1])))
+                self._figure.selected_cell[1],
+                self._figure.selected_cell[0])))
         self.positionLabel.setText(' || '.join(text_items))
 
     @QtCore.pyqtSignature('bool')

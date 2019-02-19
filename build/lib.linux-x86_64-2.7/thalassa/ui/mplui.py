@@ -53,7 +53,7 @@ class MplFigure(Figure):
         }
 
         self.pcolor_options = {
-          'cmap': None,
+          'cmap': 'jet',
           'norm': None,
           'edgecolors': 'none',
           'vmin': np.min(self.current_values),
@@ -175,11 +175,12 @@ class MplFigure(Figure):
     def on_release(self, event):
         if self.event.x == event.x and self.event.y == event.y:
             x, y = self._bmap(event.xdata, event.ydata, inverse=True)
+            print(x,y)
             posx, posy = self._calc_pos(
                 self.grid.x_vert_T,
                 self.grid.y_vert_T,
                 x, y)
-            print(x,y,posx,posy)
+            print(posx,posy)
             self.selected_cells = (posx, posy)
             self.selected_cell = (posx[0], posy[0])
             self.selected_cell_changed()
@@ -229,7 +230,6 @@ class MplFigure(Figure):
 
     def _calc_pos(self, xarray, yarray, x, y):
         posx, posy = self.grid.calc_pos(xarray, yarray, x, y)
-        print(x,y,posx,posy)
         zs = self._calc_step()
         xstart = posx - zs / 2
         xend = posx + zs / 2
@@ -285,7 +285,8 @@ class MplFigure(Figure):
             self.plot_grid()
 
     def save_diff(self, filename):
-        diffs = self.grid.compare_differences('depth_t', self.depth_t)
+        #diffs = self.grid.compare_differences('depth_t', self.depth_t)
+        diffs = self.grid.compare_differences('ht', self.depth_t)
         self.grid.save_differences(filename, diffs)
 
     def load_changes(self, filename):
