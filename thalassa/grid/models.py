@@ -4,12 +4,16 @@ import operator
 
 import numpy as np
 from netCDF4 import Dataset
+from shutil import copy2, move
 
 
 class Grid(object):
 
     def __init__(self, filename, *args, **kwargs):
-        self.data = Dataset(filename, 'r', format="NETCDF4")
+        self.fname = "._edit_grid.nc"
+        print(filename)
+        copy2(filename,self.fname)
+        self.data = Dataset(self.fname, 'r+', format="NETCDF4")
         self.preprocessing()
 
     def preprocessing(self):
@@ -47,15 +51,26 @@ class MOM4Grid(Grid):
         #self.zb = self.data.variables['zb'][:]
         self.join_lat = self.data.join_lat
 
-    def compare_differences(self, variable, cmpe):
-        diff = (self.data.variables[variable] == cmpe)
+    def compare_differences(self, depth_t, num_levels):
+        diff = (self.data.variables['ht'] == depth_t)
         px, py = np.where(diff == False)
         cmpes = []
+
+        self.data.variables['ht'][:] = depth_t
+        self.data.variables['kmt'][:] = num_levels
+        wet = (num_levels > 0).astype(float)
+        self.data.variables['wet'][:] = wet
+        self.data.sync()
+
         for x, y in zip(px, py):
-            cmpes.append(cmpe[x][y])
+            cmpes.append(depth_t[x][y])
         return zip(map(operator.add, py, [1] * len(py)),
                    map(operator.add, px, [1] * len(px)),
                    cmpes)
+
+    def save_new_grid(self, filename):
+        self.data.close()
+        move(self.fname, filename)
 
     def save_differences(self, filename, diffs):
         f = open(filename, 'w')

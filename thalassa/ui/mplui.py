@@ -284,9 +284,13 @@ class MplFigure(Figure):
             self.grid.change_value(px, py, depth_t, num_levels)
             self.plot_grid()
 
+    def save_new_grid(self, filename):
+        diffs = self.grid.compare_differences(self.depth_t,self.num_levels)
+        self.grid.save_new_grid(filename)
+
     def save_diff(self, filename):
         #diffs = self.grid.compare_differences('depth_t', self.depth_t)
-        diffs = self.grid.compare_differences('ht', self.depth_t)
+        diffs = self.grid.compare_differences(self.depth_t,self.num_levels)
         self.grid.save_differences(filename, diffs)
 
     def load_changes(self, filename):

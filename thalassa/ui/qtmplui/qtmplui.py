@@ -166,6 +166,12 @@ class QtMplUI(QtGui.QMainWindow, Ui_QtMplWindow, UI):
 
     @QtCore.pyqtSignature('bool')
     def on_actionQuit_triggered(self, checked):
+        default_path = 'examples/data/grids_tupa/'
+        filename = QtGui.QFileDialog.getSaveFileName(
+            self,
+            'Save edited grid file',
+            default_path)
+        self._figure.save_new_grid(filename)
         self.close()
 
     @QtCore.pyqtSignature('bool')
@@ -194,16 +200,17 @@ class QtMplUI(QtGui.QMainWindow, Ui_QtMplWindow, UI):
             'Open file',
             default_path)
         # TODO: open a dialog, showing the error if this doesn't work.
-        grid = MOM4Grid(str(filename))
+        if filename != "" :
+            grid = MOM4Grid(str(filename))
 
-        self._figure = MplFigure(grid)
-        self.mapwidget.set_canvas(self._figure)
-        self._figure.plot_grid()
-        self.updateLatLonEdits()
-        self.updateMinMaxValueEdits()
-        self.updateZoomSlider()
-        self._figure.set_changed_value_callback(self.updateCellValueEdits)
-        self._figure.set_pointed_value_callback(self.updatePositionLabel)
+            self._figure = MplFigure(grid)
+            self.mapwidget.set_canvas(self._figure)
+            self._figure.plot_grid()
+            self.updateLatLonEdits()
+            self.updateMinMaxValueEdits()
+            self.updateZoomSlider()
+            self._figure.set_changed_value_callback(self.updateCellValueEdits)
+            self._figure.set_pointed_value_callback(self.updatePositionLabel)
 
     @QtCore.pyqtSignature('bool')
     def on_loadChangesButton_clicked(self, checked):
@@ -221,4 +228,11 @@ class QtMplUI(QtGui.QMainWindow, Ui_QtMplWindow, UI):
         self._figure.plot_grid()
 
     def closeEvent(self, ce):
+        default_path = 'examples/data/grids_tupa/'
+        filename = QtGui.QFileDialog.getSaveFileName(
+            self,
+            'Save edited grid file',
+            default_path)
+        if filename != "":
+            self._figure.save_new_grid(filename)
         self.close()
